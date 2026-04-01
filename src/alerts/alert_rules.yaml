@@ -1,0 +1,24 @@
+rules:
+  - id: high-derogation
+    title: High Derogation Warning
+    column: derogation_pct
+    condition: gt
+    threshold: 15.0
+    severity: warning
+    message_template: "Average derogation percentage is high: {value:.1f}%"
+  
+  - id: failed-calls-danger
+    title: Critical Failed Calls
+    column: failed_calls
+    condition: gt
+    threshold: 100
+    severity: danger
+    message_template: "System detected {value} failed calls in the current selection."
+
+  - id: low-conversion
+    title: Conversion Drop
+    column: conversion_rate
+    condition: lt
+    threshold: 5.0
+    severity: danger
+    message_template: "Conversion rate dropped below 5%: {value:.1f}%"

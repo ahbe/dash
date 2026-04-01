@@ -1,0 +1,3 @@
+"""
+Initializes the layouts package.
+"""

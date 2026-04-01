@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+*.env
+.env.*
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+thumbs.db
+
+# Dash related
+assets/
+# If you have dynamically generated assets, you might want to ignore them
+
+# Data
+data/*.csv
+data/*.xlsx
+# Ignore all data files not explicitly tracked
+!data/sample/sample_data.csv
+
+# Logs
+logs/
+*.log
+
+# MLflow
+mlruns/
+
+# DVC
+.dvc/
+
+# Docker
+.dockerignore
+
+# Others
+*.lock

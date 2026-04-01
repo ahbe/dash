@@ -1,0 +1,3 @@
+"""
+Initializes the components package.
+"""
