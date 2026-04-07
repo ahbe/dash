@@ -14,6 +14,7 @@ def create_data_table_block(
     df: pd.DataFrame = pd.DataFrame(),
     title: Optional[str] = None,
     page_size: int = 10,
+    virtualization: bool = True,
 ) -> dbc.Card:
     """
     Creates a styled data table within a Card.
@@ -48,6 +49,7 @@ def create_data_table_block(
         },
         filter_action="native",
         sort_action="native",
+        virtualization=virtualization,
     )
 
     return dbc.Card(

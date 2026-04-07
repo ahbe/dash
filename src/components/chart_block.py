@@ -37,7 +37,7 @@ def create_chart_block(
     layout_overrides: Optional[Dict[str, Any]] = None,
     height: int = 400,
     subtitle: Optional[str] = None,
-) -> dbc.Card:
+) -> html.Div:
     """
     Creates a styled chart container with a Plotly figure.
 
@@ -54,7 +54,7 @@ def create_chart_block(
         subtitle: Optional chart subtitle.
 
     Returns:
-        dbc.Card: Chart component wrapped in a Card.
+        html.Div: Chart component wrapped in a Div for layout tracking.
     """
     fig = go.Figure()
 
@@ -82,34 +82,60 @@ def create_chart_block(
         **(layout_overrides or {})
     )
 
-    return dbc.Card(
-        [
-            dbc.CardHeader(
-                [
-                    html.Div(
-                        [
-                            html.H5(title, className="mb-0"),
-                            html.Small(subtitle, className="text-muted") if subtitle else None,
-                        ]
-                    ),
-                    dbc.Button(
-                        html.I(className="bi bi-download"),
-                        id={"type": "chart-download", "index": chart_id},
-                        color="link",
-                        size="sm",
-                        className="p-0 text-muted",
-                    ),
-                ],
-                className="d-flex justify-content-between align-items-center",
-            ),
-            dbc.CardBody(
-                dcc.Graph(
-                    id={"type": "chart", "index": chart_id},
-                    figure=fig,
-                    config={"displayModeBar": False},
+    return html.Div(
+        id={"type": "chart-block", "index": chart_id},
+        children=dbc.Card(
+            [
+                dbc.CardHeader(
+                    [
+                        html.Div(
+                            [
+                                html.Div([
+                                    html.H5(title, className="mb-0 d-inline-block"),
+                                    dbc.Badge(chart_type.value.title(), color="secondary", className="ms-2 small"),
+                                ]),
+                                html.Small(subtitle, className="text-muted") if subtitle else None,
+                            ]
+                        ),
+                        html.Div([
+                            dbc.Button(
+                                html.I(className="bi bi-arrows-fullscreen"),
+                                id={"type": "chart-expand", "index": chart_id},
+                                color="link",
+                                size="sm",
+                                className="p-0 text-muted me-2",
+                            ),
+                            dbc.Button(
+                                html.I(className="bi bi-download"),
+                                id={"type": "chart-download", "index": chart_id},
+                                color="link",
+                                size="sm",
+                                className="p-0 text-muted",
+                            ),
+                        ]),
+                    ],
+                    className="d-flex justify-content-between align-items-center",
                 ),
-                className="p-1",
-            ),
-        ],
-        className="mb-4 shadow-sm",
+                dbc.CardBody(
+                    [
+                        dcc.Graph(
+                            id={"type": "chart", "index": chart_id},
+                            figure=fig,
+                            config={
+                                "displayModeBar": True,
+                                "scrollZoom": True,
+                                "toImageButtonOptions": {"format": "png", "filename": f"chart_{chart_id}"},
+                            },
+                            style={"height": "100%", "width": "100%"},
+                            responsive=True,
+                        ),
+                        html.Div(id={"type": "chart-selection", "index": chart_id}, className="small mt-2")
+                    ],
+                    className="p-1 d-flex flex-column",
+                    style={"flex": "1", "minHeight": "0"}
+                ),
+            ],
+            className="mb-4 shadow-sm resizable-tile",
+            style={"display": "flex", "flexDirection": "column"}
+        )
     )

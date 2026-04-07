@@ -52,6 +52,52 @@ def create_sidebar() -> html.Div:
                 filter_type=FilterType.DATE_RANGE,
             ),
             html.Hr(),
+            html.H5("Data Controls", className="mb-4"),
+            dbc.Select(
+                id="data-source-select",
+                options=[
+                    {"label": "Local CSV", "value": "csv"},
+                    {"label": "SharePoint", "value": "sharepoint"},
+                    {"label": "COS", "value": "cos"},
+                ],
+                value="csv", # Default to CSV
+                className="mb-3"
+            ),
+            dbc.InputGroup(
+                [
+                    dbc.Input(id="csv-file-path", placeholder="Enter CSV file path", value="data/sample/sample_data.csv"),
+                    dbc.Button("Load CSV", id="load-csv-button", n_clicks=0, color="secondary"),
+                ],
+                className="mb-3",
+                id="csv-input-group",
+            ),
+            dbc.InputGroup(
+                [
+                    dbc.Input(id="sharepoint-file-path", placeholder="Enter SharePoint file path"),
+                    dbc.Button("Load SP", id="load-sharepoint-button", n_clicks=0, color="secondary"),
+                ],
+                className="mb-3",
+                id="sharepoint-input-group",
+                style={"display": "none"},
+            ),
+            dbc.InputGroup(
+                [
+                    dbc.Input(id="cos-object-key", placeholder="Enter COS object key"),
+                    dbc.Button("Load COS", id="load-cos-button", n_clicks=0, color="secondary"),
+                ],
+                className="mb-3",
+                id="cos-input-group",
+                style={"display": "none"},
+            ),
+            dbc.Button("Reload Data", id="reload-data-button", color="primary", className="mb-4 w-100"),
+            html.Hr(),
+            dbc.Button(
+                [html.I(className="bi bi-plus-circle me-2"), "Create Custom Graph"],
+                id="open-graph-builder-button",
+                color="success",
+                className="mb-4 w-100 shadow-sm",
+            ),
+            html.Hr(),
             html.Div(
                 [
                     html.H6("Model Info", className="mb-3"),

@@ -13,6 +13,7 @@ import src.callbacks.chart_callbacks
 import src.callbacks.alert_callbacks
 import src.callbacks.refresh_callbacks
 import src.callbacks.model_callbacks
+import src.callbacks.graph_builder_callbacks
 
 
 if __name__ == "__main__":

@@ -12,7 +12,7 @@ from src.components.alert_block import create_alert_block
 
 @callback(
     Output("alerts-container", "children"),
-    Input("raw-data-table", "data"),
+    Input({"type": "data-table", "index": "raw-data-table"}, "data"),
 )
 def update_alerts(table_data: List[Dict[str, Any]]) -> List[html.Div]:
     """

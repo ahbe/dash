@@ -10,7 +10,7 @@ from src.data.transformers.metric_transformer import MetricTransformer
 
 @callback(
     Output({"type": "metric-value", "index": ALL}, "children"),
-    Input("raw-data-table", "data"),
+    Input({"type": "data-table", "index": "raw-data-table"}, "data"),
 )
 def update_metrics(table_data: List[Dict[str, Any]]) -> List[Any]:
     """

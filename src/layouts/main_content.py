@@ -53,10 +53,13 @@ def create_main_content() -> html.Div:
                 className="mb-4",
             ),
             
+            # Custom Graph Gallery
+            html.Div(id="custom-graph-gallery", className="mb-4"),
+
             # Data Table Row
             dbc.Row(
                 [
-                    dbc.Col(create_data_table_block("raw-data-table", title="Detailed Derogation Data"), width=12),
+                    dbc.Col(create_data_table_block("raw-data-table", title="Detailed Derogation Data"), width=12, className="resizable-tile"),
                 ]
             ),
         ],

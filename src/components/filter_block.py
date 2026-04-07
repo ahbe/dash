@@ -43,7 +43,11 @@ def create_filter_block(
         dbc.Card: Filter component wrapped in a Card.
     """
     # Pattern-matching ID
-    pm_id = {"type": "filter", "index": filter_id}
+    # Date ranges need a separate type because they use start_date/end_date instead of value
+    if filter_type == FilterType.DATE_RANGE:
+        pm_id = {"type": "date-filter", "index": filter_id}
+    else:
+        pm_id = {"type": "filter", "index": filter_id}
 
     if filter_type == FilterType.DROPDOWN:
         widget = dcc.Dropdown(
