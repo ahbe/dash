@@ -87,13 +87,14 @@ def expand_default_chart(n_clicks, figures):
     if isinstance(trig, dict) and trig.get("type") == "chart-expand":
         chart_id = trig["index"]
         
-        # Find the figure in the figures list based on index
-        # ctx.inputs_list[1] contains the State({"type": "chart", "index": ALL}, "figure")
-        for item in ctx.inputs_list[1]:
-            if item["id"]["index"] == chart_id:
-                fig = item["value"]
-                title = fig.get("layout", {}).get("title", {}).get("text", "Chart")
-                return True, title, fig
+        # Find the figure in the states list based on index
+        # ctx.states_list[0] contains the State({"type": "chart", "index": ALL}, "figure")
+        if hasattr(ctx, 'states_list') and ctx.states_list and len(ctx.states_list) > 0:
+            for item in ctx.states_list[0]:
+                if item["id"]["index"] == chart_id:
+                    fig = item["value"]
+                    title = fig.get("layout", {}).get("title", {}).get("text", "Chart")
+                    return True, title, fig
 
     return no_update, no_update, no_update
 

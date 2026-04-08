@@ -52,10 +52,15 @@ def create_data_table_block(
         virtualization=virtualization,
     )
 
-    return dbc.Card(
-        [
-            dbc.CardHeader(html.H5(title, className="mb-0")) if title else None,
-            dbc.CardBody(table, className="p-0"),
-        ],
-        className="mb-4 shadow-sm",
+    return html.Div(
+        dbc.Card(
+            [
+                dbc.CardHeader(html.H5(title, className="mb-0")) if title else None,
+                dbc.CardBody(table, className="p-0"),
+            ],
+            className="h-100 shadow-sm",
+        ),
+        id={"type": "chart-container", "index": table_id},
+        className="chart-block-wrapper",
+        style={"minHeight": "400px"}
     )

@@ -23,7 +23,8 @@ def create_app() -> dash.Dash:
 
     app = dash.Dash(
         __name__,
-        external_stylesheets=[theme, dbc.icons.BOOTSTRAP],
+        external_stylesheets=[theme, dbc.icons.BOOTSTRAP, "/assets/custom.css"],
+        external_scripts=[],
         suppress_callback_exceptions=True,
         title=settings.APP_TITLE,
         meta_tags=[

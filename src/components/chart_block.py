@@ -37,7 +37,7 @@ def create_chart_block(
     layout_overrides: Optional[Dict[str, Any]] = None,
     height: int = 400,
     subtitle: Optional[str] = None,
-) -> html.Div:
+    ) -> html.Div:
     """
     Creates a styled chart container with a Plotly figure.
 
@@ -54,7 +54,7 @@ def create_chart_block(
         subtitle: Optional chart subtitle.
 
     Returns:
-        html.Div: Chart component wrapped in a Div for layout tracking.
+        html.Div: Resizable chart component.
     """
     fig = go.Figure()
 
@@ -68,53 +68,69 @@ def create_chart_block(
         elif chart_type == ChartType.PIE:
             fig = px.pie(df, names=x_field, values=y_fields[0])
         elif chart_type == ChartType.HEATMAP:
-            # Heatmap expects specific data structure, simplified here
             fig = px.density_heatmap(df, x=x_field, y=y_fields[0], z=y_fields[1] if len(y_fields) > 1 else None)
         elif chart_type == ChartType.TREEMAP:
             fig = px.treemap(df, path=[x_field], values=y_fields[0], color=color_field)
-        # Add other types as needed
 
     fig.update_layout(
         margin=dict(l=20, r=20, t=40, b=20),
-        height=height,
         template="plotly_white",
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+        autosize=True,
         **(layout_overrides or {})
     )
 
     return html.Div(
-        id={"type": "chart-block", "index": chart_id},
-        children=dbc.Card(
+        dbc.Card(
             [
                 dbc.CardHeader(
                     [
                         html.Div(
                             [
                                 html.Div([
-                                    html.H5(title, className="mb-0 d-inline-block"),
-                                    dbc.Badge(chart_type.value.title(), color="secondary", className="ms-2 small"),
-                                ]),
-                                html.Small(subtitle, className="text-muted") if subtitle else None,
-                            ]
+                                    html.H6(title, className="mb-0 d-inline-block text-truncate", style={"maxWidth": "250px"}),
+                                    dbc.Badge(chart_type.value.title(), color="secondary", className="ms-2 small fw-normal", pill=True),
+                                ], className="d-flex align-items-center"),
+                                html.Small(subtitle, className="text-muted ms-2 d-none d-md-inline") if subtitle else None,
+                            ],
+                            className="d-flex align-items-center"
                         ),
                         html.Div([
+                            dbc.Button(
+                                html.I(className="bi bi-gear"),
+                                id={"type": "chart-edit", "index": chart_id},
+                                color="link",
+                                size="sm",
+                                className="p-1 text-muted hover-primary",
+                                title="Edit Chart"
+                            ),
                             dbc.Button(
                                 html.I(className="bi bi-arrows-fullscreen"),
                                 id={"type": "chart-expand", "index": chart_id},
                                 color="link",
                                 size="sm",
-                                className="p-0 text-muted me-2",
+                                className="p-1 text-muted hover-primary",
+                                title="Fullscreen"
                             ),
                             dbc.Button(
-                                html.I(className="bi bi-download"),
-                                id={"type": "chart-download", "index": chart_id},
+                                html.I(className="bi bi-pin-angle"),
+                                id={"type": "chart-pin", "index": chart_id},
                                 color="link",
                                 size="sm",
-                                className="p-0 text-muted",
+                                className="p-1 text-muted hover-primary",
+                                title="Pin Chart"
                             ),
-                        ]),
+                            dbc.Button(
+                                html.I(className="bi bi-trash"),
+                                id={"type": "chart-delete", "index": chart_id},
+                                color="link",
+                                size="sm",
+                                className="p-1 text-muted hover-danger",
+                                title="Delete Chart"
+                            ),
+                        ], className="d-flex align-items-center"),
                     ],
-                    className="d-flex justify-content-between align-items-center",
+                    className="d-flex justify-content-between align-items-center px-3 py-2 bg-white border-bottom-0",
                 ),
                 dbc.CardBody(
                     [
@@ -122,20 +138,28 @@ def create_chart_block(
                             id={"type": "chart", "index": chart_id},
                             figure=fig,
                             config={
-                                "displayModeBar": True,
-                                "scrollZoom": True,
+                                "displayModeBar": "hover",
+                                "scrollZoom": False,
                                 "toImageButtonOptions": {"format": "png", "filename": f"chart_{chart_id}"},
+                                "responsive": True,
+                                "displaylogo": False,
                             },
                             style={"height": "100%", "width": "100%"},
-                            responsive=True,
+                            className="chart-container"
                         ),
-                        html.Div(id={"type": "chart-selection", "index": chart_id}, className="small mt-2")
+                        html.Div(id={"type": "chart-selection", "index": chart_id}, className="small mt-1 text-muted text-center")
                     ],
-                    className="p-1 d-flex flex-column",
+                    className="p-3 d-flex flex-column",
                     style={"flex": "1", "minHeight": "0"}
                 ),
             ],
-            className="mb-4 shadow-sm resizable-tile",
-            style={"display": "flex", "flexDirection": "column"}
-        )
+            className="h-100 border-0 shadow-sm resizable-chart", 
+            style={
+                "borderRadius": "12px",
+                "overflow": "hidden",
+            }
+        ),
+        id={"type": "chart-container", "index": chart_id},
+        className="chart-block-wrapper",
+        style={"height": f"{height}px", "minHeight": "200px"}
     )

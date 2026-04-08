@@ -32,36 +32,67 @@ def create_main_content() -> html.Div:
                     dbc.Col(create_metric_card("converted-margin", "Converted Margin", icon="currency-euro", color_scheme="warning"), md=4, lg=2),
                     dbc.Col(create_metric_card("conversion-rate", "Conversion Rate", icon="check2-circle", color_scheme="primary"), md=4, lg=2),
                 ],
-                className="mb-4",
+                className="mb-4 g-3",
             ),
             
-            # Charts Row 1
+            # Charts Grid
             dbc.Row(
                 [
-                    dbc.Col(create_chart_block("derogation-trend", "Derogation Trend", ChartType.LINE), lg=8),
-                    dbc.Col(create_chart_block("brand-distribution", "Brand Distribution", ChartType.PIE), lg=4),
+                    # Time series charts
+                    dbc.Col(
+                        create_chart_block("derogation-trend", "Derogation Trend", ChartType.LINE, subtitle="Daily derogation volume over time"),
+                        width=12, lg=8, className="mb-4"
+                    ),
+                    
+                    # Pie charts
+                    dbc.Col(
+                        create_chart_block("brand-distribution", "Brand Distribution", ChartType.PIE, subtitle="Market share by brand"),
+                        width=12, lg=4, className="mb-4"
+                    ),
                 ],
-                className="mb-4",
+                className="g-4",
             ),
-            
-            # Charts Row 2
+
             dbc.Row(
                 [
-                    dbc.Col(create_chart_block("segment-performance", "Segment Performance", ChartType.BAR), lg=6),
-                    dbc.Col(create_chart_block("purpose-analysis", "Purpose Analysis", ChartType.BAR), lg=6),
+                    dbc.Col(
+                        create_chart_block("segment-performance", "Segment Performance", ChartType.BAR),
+                        width=12, lg=6, className="mb-4"
+                    ),
+                    
+                    dbc.Col(
+                        create_chart_block("purpose-analysis", "Purpose Analysis", ChartType.BAR),
+                        width=12, lg=6, className="mb-4"
+                    ),
                 ],
-                className="mb-4",
+                className="g-4",
             ),
             
             # Custom Graph Gallery
-            html.Div(id="custom-graph-gallery", className="mb-4"),
-
-            # Data Table Row
             dbc.Row(
                 [
-                    dbc.Col(create_data_table_block("raw-data-table", title="Detailed Derogation Data"), width=12, className="resizable-tile"),
+                    dbc.Col(
+                        html.Div(
+                            id="custom-graph-gallery-container",
+                            children=[
+                                html.Div(id="custom-graph-gallery", className="p-3 border rounded bg-white shadow-sm", 
+                                       children=[html.P("Your custom charts will appear here...", className="text-center text-muted mb-0")])
+                            ]
+                        ),
+                        width=12, className="mb-4"
+                    ),
+                ]
+            ),
+
+            # Data Table
+            dbc.Row(
+                [
+                    dbc.Col(
+                        create_data_table_block("raw-data-table", title="Detailed Derogation Data"),
+                        width=12, className="mb-4"
+                    ),
                 ]
             ),
         ],
-        className="p-4",
+        className="p-4 bg-light min-vh-100",
     )

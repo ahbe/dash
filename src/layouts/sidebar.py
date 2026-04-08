@@ -21,30 +21,19 @@ def create_sidebar() -> html.Div:
                 filter_id="brand",
                 label="Brand",
                 filter_type=FilterType.MULTI_DROPDOWN,
-                options=[
-                    {"label": "Brand A", "value": "Brand A"},
-                    {"label": "Brand B", "value": "Brand B"},
-                    {"label": "Brand C", "value": "Brand C"},
-                ],
+                options=[],
             ),
             create_filter_block(
                 filter_id="segment",
                 label="Segment",
                 filter_type=FilterType.MULTI_DROPDOWN,
-                options=[
-                    {"label": "Retail", "value": "Retail"},
-                    {"label": "Corporate", "value": "Corporate"},
-                    {"label": "SME", "value": "SME"},
-                ],
+                options=[],
             ),
             create_filter_block(
                 filter_id="purpose",
                 label="Purpose",
                 filter_type=FilterType.MULTI_DROPDOWN,
-                options=[
-                    {"label": "Home Loan", "value": "Home Loan"},
-                    {"label": "Auto Loan", "value": "Auto Loan"},
-                ],
+                options=[],
             ),
             create_filter_block(
                 filter_id="date_range",
@@ -95,7 +84,13 @@ def create_sidebar() -> html.Div:
                 [html.I(className="bi bi-plus-circle me-2"), "Create Custom Graph"],
                 id="open-graph-builder-button",
                 color="success",
-                className="mb-4 w-100 shadow-sm",
+                className="mb-2 w-100 shadow-sm",
+            ),
+            dbc.Button(
+                [html.I(className="bi bi-intersect me-2"), "Create Comparison Chart"],
+                id="open-comparison-builder-button",
+                color="info",
+                className="mb-4 w-100 shadow-sm text-white",
             ),
             html.Hr(),
             html.Div(
