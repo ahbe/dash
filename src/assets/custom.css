@@ -1,0 +1,176 @@
+/* Custom CSS for Pricing Derogation Dashboard */
+
+body {
+    background-color: #f4f7f6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+    border: none;
+    border-radius: 8px;
+}
+
+.card-header {
+    background-color: transparent;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.navbar {
+    z-index: 1000;
+}
+
+/* Custom scrollbar for sidebar */
+#sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+#sidebar::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+/* Metric card animations */
+.metric-card-value {
+    transition: all 0.3s ease;
+}
+
+/* Table styling overrides */
+.dash-spreadsheet-container .dash-spreadsheet-inner td {
+    border-bottom: 1px solid #f0f0f0 !important;
+}
+
+/* Pattern-matching component styling */
+[id*='filter'] .dropdown-menu {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Custom Graph Builder Styles */
+.chart-type-card {
+    transition: all 0.2s ease-in-out;
+    background-color: #fff;
+    color: #495057;
+}
+
+.chart-type-card:hover {
+    background-color: #f8f9fa;
+    border-color: #0d6efd !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.chart-type-card.active {
+    background-color: #e7f1ff;
+    border-color: #0d6efd !important;
+    color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.chart-type-card i {
+    color: #6c757d;
+}
+
+.chart-type-card.active i {
+    color: #0d6efd;
+}
+
+/* Resizable Chart Styles */
+.chart-block-wrapper {
+    transition: box-shadow 0.3s ease;
+    resize: both;
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.chart-block-wrapper:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.resizable-chart {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Add a small handle indicator for resizing if desired */
+.chart-block-wrapper::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 4px;
+    background: #dee2e6;
+    border-radius: 2px;
+}
+
+/* Chart Container */
+.chart-container {
+    flex: 1;
+    min-height: 0;
+}
+
+/* Pinned Tiles */
+.pinned-tile .bi-pin-angle {
+    color: #0d6efd !important;
+    transform: rotate(45deg);
+}
+
+/* Custom Dataset Tabs */
+#dataset-tabs-container {
+    max-width: 60vw;
+    scrollbar-width: thin;
+}
+
+.dataset-tab {
+    cursor: pointer;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-bottom: none;
+    padding: 0.5rem 1rem;
+    margin-right: 2px;
+    border-radius: 4px 4px 0 0;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.dataset-tab:hover {
+    background-color: #e9ecef;
+}
+
+.dataset-tab.active {
+    background-color: #fff;
+    border-color: #dee2e6 #dee2e6 #fff #dee2e6;
+    font-weight: bold;
+    color: var(--bs-primary);
+    z-index: 1;
+}
+
+.dataset-tab .tab-close {
+    margin-left: 0.5rem;
+    color: #adb5bd;
+    font-size: 1rem;
+}
+
+.dataset-tab .tab-close:hover {
+    color: var(--bs-danger);
+}
+
+.dataset-tab .tab-badge {
+    margin-left: 0.5rem;
+    font-size: 0.7rem;
+}
+
+/* Custom Toolbars */
+.chart-toolbar {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 4px;
+    padding: 2px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 10;
+}
